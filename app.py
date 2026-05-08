@@ -56,18 +56,18 @@ def mostrar_resultados():
     st.subheader("Resultados de la Votación")
     col1, col2, col3 = st.columns(3)
 
-    col1.metric("Opción A", f"{resultados['Opción A']}%")
-    col2.metric("Opción B", f"{resultados['Opción B']}%")
-    col3.metric("Opción C", f"{resultados['Opción C']}%")
+    col1.metric("Opcion A", f"{resultados['Opcion A']}%")
+    col2.metric("Opcion B", f"{resultados['Opcion B']}%")
+    col3.metric("Opcion C", f"{resultados['Opcion C']}%")
     
 
 
     chart_df = pd.DataFrame({
-        "Resultado": ["Opción A", "Opción B", "Opción C"],
+        "Resultado": ["Opcion A", "Opcion B", "Opcion C"],
         "Porcentaje": [
-            resultados["Opción A"],
-            resultados["Opción B"],
-            resultados["Opción C"]
+            resultados["Opcion A"],
+            resultados["Opcion B"],
+            resultados["Opcion C"]
         ]
     })
 
