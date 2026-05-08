@@ -7,7 +7,7 @@ from services.sheets_service import (
     load_coefficients
 )
 
-from services.calculations import process_votes
+from services.calculations import process_votes, calculate_quorum
 
 st.set_page_config(
     page_title="Votación PH",
@@ -22,6 +22,20 @@ def mostrar_resultados():
     df_votes = load_responses()
     df_coef = load_coefficients()
 
+    quorum_pct = calculate_quorum(df_coef)
+    if quorum_pct is not None:
+        quorum_met = quorum_pct >= 50
+        st.subheader("Quorum de la Asamblea")
+        qcol1, qcol2 = st.columns([1, 4])
+        with qcol1:
+            st.metric("Quorum", f"{quorum_pct}%")
+        with qcol2:
+            if quorum_met:
+                st.success(f"Quorum alcanzado — {quorum_pct}% del coeficiente total está presente (mínimo 50%)")
+            else:
+                st.error(f"Sin quorum — {quorum_pct}% presente, se requiere al menos 50% del coeficiente total")
+        st.divider()
+
     if df_votes.empty:
         st.info("Aún no hay votos registrados. La página se actualizará automáticamente.")
         return
@@ -34,20 +48,6 @@ def mostrar_resultados():
         st.write("Columnas actuales en respuestas:", list(df_votes.columns))
         st.write("Columnas actuales en coeficientes:", list(df_coef.columns))
         return
-
-    quorum_pct = resultados.get("quorum_pct")
-    if quorum_pct is not None:
-        quorum_met = quorum_pct >= 51
-        st.subheader("Quorum de la Asamblea")
-        qcol1, qcol2 = st.columns([1, 4])
-        with qcol1:
-            st.metric("Quorum", f"{quorum_pct}%")
-        with qcol2:
-            if quorum_met:
-                st.success(f"Quorum alcanzado — {quorum_pct}% del coeficiente total está presente (mínimo 51%)")
-            else:
-                st.error(f"Sin quorum — {quorum_pct}% presente, se requiere al menos 51% del coeficiente total")
-        st.divider()
 
     st.subheader("Resultados de la Votación")
     col1, col2, col3, col4 = st.columns(4)

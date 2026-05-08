@@ -17,6 +17,17 @@ def _is_attending(val) -> bool:
     return text in {"1", "true", "si", "sí", "yes", "x", "verdadero"}
 
 
+def calculate_quorum(df_coef) -> float | None:
+    df_coef = df_coef.copy()
+    df_coef["coeficiente"] = pd.to_numeric(df_coef["coeficiente"], errors="coerce").fillna(0)
+    total_coef = df_coef["coeficiente"].sum()
+    if total_coef == 0 or "asistencia" not in df_coef.columns:
+        return None
+    attending_mask = df_coef["asistencia"].apply(_is_attending)
+    quorum_coef = df_coef.loc[attending_mask, "coeficiente"].sum()
+    return round((quorum_coef / total_coef) * 100, 2)
+
+
 def process_votes(df_votes, df_coef):
     validate_columns(df_votes, ["apartamento", "voto"], "df_votes")
     validate_columns(df_coef, ["apartamento", "coeficiente"], "df_coef")
