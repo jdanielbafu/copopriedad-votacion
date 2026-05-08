@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import ast; ast.parse\\(open\\('app.py'\\).read\\(\\)\\); print\\('app.py OK'\\)\")",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('services/calculations.py'\\).read\\(\\)\\); print\\('calculations.py OK'\\)\")",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('services/sheets_service.py'\\).read\\(\\)\\); print\\('sheets_service.py OK'\\)\")"
+    ]
+  }
+}
