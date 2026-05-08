@@ -56,18 +56,16 @@ def process_votes(df_votes, df_coef):
     if total_coef == 0:
         raise ValueError("El total de coeficientes es 0. Revisa los datos de la hoja 'coeficientes'.")
 
-    favor = df[df["voto"] == "Favor"]["coeficiente"].sum()
-
-    contra = df[df["voto"] == "Contra"]["coeficiente"].sum()
-
-    blanco = df[df["voto"] == "Blanco"]["coeficiente"].sum()
+    opcion_a = df[df["voto"] == "Opción A"]["coeficiente"].sum()
+    opcion_b = df[df["voto"] == "Opción B"]["coeficiente"].sum()
+    opcion_c = df[df["voto"] == "Opción C"]["coeficiente"].sum()
 
     participacion = df["coeficiente"].sum()
 
     resultados = {
-        "favor_pct": round((favor / total_coef) * 100, 2),
-        "contra_pct": round((contra / total_coef) * 100, 2),
-        "blanco_pct": round((blanco / total_coef) * 100, 2),
+        "Opción A": round((opcion_a / total_coef) * 100, 2),
+        "Opción B": round((opcion_b / total_coef) * 100, 2),
+        "Opción C": round((opcion_c / total_coef) * 100, 2),
         "participacion_pct": round((participacion / total_coef) * 100, 2),
         "quorum_pct": None,
         "df_votos": df_votes,

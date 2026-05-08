@@ -49,20 +49,25 @@ def mostrar_resultados():
         st.write("Columnas actuales en coeficientes:", list(df_coef.columns))
         return
 
+    st.subheader("Porcentaje de la participación")
+    col4 = st.columns(1)
+    col4[0].metric("Participación", f"{resultados['participacion_pct']}%")
+    
     st.subheader("Resultados de la Votación")
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3 = st.columns(3)
 
-    col1.metric("A Favor", f"{resultados['favor_pct']}%")
-    col2.metric("En Contra", f"{resultados['contra_pct']}%")
-    col3.metric("Blanco", f"{resultados['blanco_pct']}%")
-    col4.metric("Participación", f"{resultados['participacion_pct']}%")
+    col1.metric("Opción A", f"{resultados['Opción A']}%")
+    col2.metric("Opción B", f"{resultados['Opción B']}%")
+    col3.metric("Opción C", f"{resultados['Opción C']}%")
+    
+
 
     chart_df = pd.DataFrame({
-        "Resultado": ["Favor", "Contra", "Blanco"],
+        "Resultado": ["Opción A", "Opción B", "Opción C"],
         "Porcentaje": [
-            resultados["favor_pct"],
-            resultados["contra_pct"],
-            resultados["blanco_pct"]
+            resultados["Opción A"],
+            resultados["Opción B"],
+            resultados["Opción C"]
         ]
     })
 
