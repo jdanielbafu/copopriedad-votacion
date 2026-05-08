@@ -22,6 +22,10 @@ def mostrar_resultados():
     df_votes = load_responses()
     df_coef = load_coefficients()
 
+    if df_votes.empty:
+        st.info("Aún no hay votos registrados. La página se actualizará automáticamente.")
+        return
+
     try:
         resultados = process_votes(df_votes, df_coef)
     except KeyError as exc:
